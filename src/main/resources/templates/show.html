@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<!-- BOOTSTRAP -->
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+<title>Pizza</title>
+</head>
+<body class="bg-dark text-white">
+	<header class="text-center my-4">
+		<h1>Pizza:</h1> 
+	</header>
+	<main class="container d-flex justify-content-center">
+		<div th:object="${pizza}" class="card my-4" style="width: 40rem;">
+	  		<img th:src="*{image}" class="card-img-top" th:alt="*{name}">
+	  		<div class="card-body text-black">
+	    		<p class="card-text">Nome: [[ *{name} ]] </p>
+	    		<p class="card-text">Descrizione: [[ *{description} ]]</p>
+	    		<p class="card-text">Prezzo: [[ *{price} ]] euro</p>
+	    		<h6>Offerte: </h6>
+	    		<ul th:each="offerta : ${pizza.offerte}" th:object="${offerta}">
+	    			<li>Nome offerta: [[ *{titolo} ]] </li>
+	    			<li>Dal: [[ *{dataInizio} ]] al: [[ *{dataFine} ]]</li>
+	    			<li>Sconto del: [[ *{sconto} ]]%</li>
+	    			<li>Prezzo scontato: [[ *{getDiscountedPrice()} ]] euro</li>
+	    			<li><a th:href="@{'/admin/pizza/' + ${pizza.id} + '/offerta/edit/' + *{id}}" class="btn btn-small btn-warning text-white">Modifica offerta</a></li>
+	    		</ul>
+	  		</div>
+	  		<div class="text-center mb-2">
+				<a th:href="@{'/admin/pizza/' + ${pizza.id} + '/offerta/create'}" class="btn btn-success">Aggiungi offerta</a>	  		
+	  		</div>		
+		</div>
+	</main>
+	
+</body>
+</html>

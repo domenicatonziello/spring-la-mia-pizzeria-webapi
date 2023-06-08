@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<!-- BOOTSTRAP -->
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+<title>Aggiungi pizza</title>
+</head>
+<body class="bg-dark text-white">
+	<header class="my-5">
+		<h1 class="text-danger text-center">Aggiungi una nuova pizza</h1>
+	</header>
+	<main class="container" th:object="${pizza}">
+		<div class="row my-5">
+			<form method="POST">
+				<div class="col-6 mb-3">
+					<label>Nome</label>
+					<input type="text" name="name" th:value="*{name}">
+					<small style="color: red" th:if="${errors != null && errors.hasFieldErrors('name')}">
+						[[ ${errors.getFieldError('name').defaultMessage} ]]
+					</small>
+				</div>
+				<div class="col-6 mb-3">
+		  			<label>Url immagine</label>
+					<input type="text" name="image" th:value="*{image}">
+					<small style="color: red" th:if="${errors != null && errors.hasFieldErrors('image')}">
+						[[ ${errors.getFieldError('image').defaultMessage} ]]
+					</small>
+				</div>
+				<div class="col-6 mb-3">
+					<label>Prezzo</label>
+					<input type="number" step="0.01" name="price" th:value="*{price}">	
+					<small style="color: red" th:if="${errors != null && errors.hasFieldErrors('price')}">
+						[[ ${errors.getFieldError('price').defaultMessage} ]]
+					</small>
+				</div>
+				<div class="col-6 mb-3">
+					<label>Descrizione</label>
+					<textarea rows="5" cols="150" name="description"> [[*{description}]]</textarea>
+					<small style="color: red" th:if="${errors != null && errors.hasFieldErrors('description')}">
+						[[ ${errors.getFieldError('description').defaultMessage} ]]
+					</small>
+				</div>
+				<div th:each="ingrediente : ${ingredienti}" th:object="${ingrediente}">
+					<input th:id="${'ingrediente-' + ingrediente.id}" type="checkbox" th:value="*{id}" name="ingredienti">
+					<label th:id="${'ingrediente-' + ingrediente.id}">[[ *{nome} ]]</label>
+				</div>
+				<button class="btn btn-primary">Crea</button>						
+			</form>
+		</div>
+	</main>
+</body>
+</html>

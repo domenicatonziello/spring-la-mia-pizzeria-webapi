@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+<title>Modifica offerta</title>
+</head>
+<body>
+	<main class="container py-5">
+	<form class="d-flex flex-column align-items-center" th:action="@{'/admin/pizza/' + ${pizzaId} + '/offerta/update/' + ${id}}" method="POST" th:object="${offerta}">
+		<h1 class="mb-3">Modifica Offerta</h1>
+		<label>Titolo</label>
+		<input class="mb-3" type="text" name="titolo" th:value="*{titolo}">
+		<small 
+			class="text-danger mb-3"
+			th:if="${errors != null && errors.hasFieldErrors('titolo')}"
+		>
+			[[ ${errors.getFieldError('titolo').defaultMessage} ]]
+		</small>
+		<label>Data inizio</label>
+		<input class="mb-3" type="date" name="dataInizio" th:value="*{dataInizio}">
+		<small 
+			class="text-danger mb-3"
+			th:if="${errors != null && errors.hasFieldErrors('dataInizio')}"
+		>
+			[[ ${errors.getFieldError('dataInizio').defaultMessage} ]]
+		</small>
+		<label>Data fine</label>
+		<input class="mb-3" type="date" name="dataFine" th:value="*{dataFine}">
+		<small 
+			class="text-danger mb-3"
+			th:if="${errors != null && errors.hasFieldErrors('dataFine')}"
+		>
+			[[ ${errors.getFieldError('dataFine').defaultMessage} ]]
+		</small>
+		<label>Percentuale sconto</label>
+		<input class="mb-3" type="number" min="0" name="sconto" th:value="*{sconto}">
+		<small 
+			class="text-danger mb-3"
+			th:if="${errors != null && errors.hasFieldErrors('sconto')}"
+		>
+			[[ ${errors.getFieldError('sconto').defaultMessage} ]]
+		</small>
+		<input type="hidden" name="pizza" th:value="${pizzaId}">
+		<button class="btn btn-success">Salva</button>
+	</form>
+	</main>
+
+</body>
+</html>

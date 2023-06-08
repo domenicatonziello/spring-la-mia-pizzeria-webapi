@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<!-- BOOTSTRAP -->
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+<title>Ingredienti</title>
+</head>
+<body>
+	<header>
+		<h1 class="text-danger my-5 text-center"> Ingredienti </h1>
+	</header>
+	<main class="container">
+		<a th:href="@{/admin/ingredients/create}" class="btn btn-success mb-3">Aggiungi nuovo ingrediente</a> 
+		<a th:href="@{/}" class="btn btn-primary mb-3">Pizze</a>
+		<ul th:each = "ingrediente : ${ingredienti}" th:object=${ingrediente}>
+			<li> 
+				[[ *{nome} ]] 
+				<form th:action="@{/admin/ingredients/delete/{id} (id=*{id})}" method="post" class="d-inline">
+					<button class="btn btn-danger">Elimina</button>
+				</form>
+			</li>
+		</ul>
+	</main>
+
+</body>
+</html>
