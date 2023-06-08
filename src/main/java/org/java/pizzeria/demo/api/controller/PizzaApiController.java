@@ -80,7 +80,7 @@ public class PizzaApiController {
 		return new ResponseEntity<>(updatedPizza, HttpStatus.OK);	
 	}
 
-	@DeleteMapping("/pizzas/delete/{id}")
+	@DeleteMapping("/pizze/delete/{id}")
 	public ResponseEntity<Pizza> deletePizza(@PathVariable int id) {
 
 		Optional<Pizza> optPizza = pizzaService.findById(id);
@@ -89,7 +89,8 @@ public class PizzaApiController {
 
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
 		}
-		pizzaService.deleteById(id);
+		Pizza pizza = optPizza.get();
+		pizzaService.deleteById(pizza.getId());
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
