@@ -27,27 +27,32 @@ public class PizzaApiController {
 	@Autowired
 	private PizzaService pizzaService;
 
+	
 	@GetMapping("/pizze")
-	public ResponseEntity<List<Pizza>> apiIndex() {
-
-		List<Pizza> pizze = pizzaService.findAll();
-
-		if (pizze.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		} else {
-			return new ResponseEntity<>(pizze, HttpStatus.OK);
+	public ResponseEntity<List<Pizza>> getAllPizza(@RequestParam(required = false) String name){
+		
+		if(name != null && !name.isEmpty()) {
+			
+			List<Pizza> pizzaList = pizzaService.findByNameContaining(name);
+			return new ResponseEntity<>(pizzaList, HttpStatus.OK);
+			
 		}
+		
+		List<Pizza> pizzaList = pizzaService.findAll();
+		
+		return new ResponseEntity<>(pizzaList, HttpStatus.OK);
+		
 	}
 
 	@GetMapping("pizze/filter")
 	public ResponseEntity<List<Pizza>> filterByName(@RequestParam(required = false) String name) {
 
-		List<Pizza> pizzas = pizzaService.findByNameContaining(name);
+		List<Pizza> pizze = pizzaService.findByNameContaining(name);
 
-		if (pizzas.isEmpty()) {
+		if (pizze.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} else {
-			return new ResponseEntity<>(pizzas, HttpStatus.OK);
+			return new ResponseEntity<>(pizze, HttpStatus.OK);
 		}
 	}
 
